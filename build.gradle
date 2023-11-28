@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
 	implementation "org.flywaydb:flyway-core:$flywayDbVersion"
+	implementation "org.flywaydb:flyway-mysql:$flywayDbVersion"
 	implementation "mysql:mysql-connector-java:$mySqlVersion"
 	implementation "dev.miku:r2dbc-mysql:$r2dbcMySqlVersion"
 

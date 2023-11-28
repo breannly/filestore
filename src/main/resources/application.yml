@@ -1,0 +1,12 @@
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/filestore
+    username: root
+    password: 81vahuti
+  jpa:
+    show-sql: true
+  flyway:
+    url: jdbc:mysql://localhost:3306/filestore
+    locations: classpath:db/migration
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
