@@ -30,6 +30,7 @@ dependencies {
 	implementation "mysql:mysql-connector-java:$mySqlVersion"
 	implementation "dev.miku:r2dbc-mysql:$r2dbcMySqlVersion"
 
+	implementation "software.amazon.awssdk:s3:$awsSdkVersion"
 	implementation "software.amazon.awssdk:netty-nio-client:$awsSdkVersion"
 
 	implementation "org.mapstruct:mapstruct:$mapstructVersion"

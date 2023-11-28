@@ -1,9 +1,11 @@
 package com.filestore.filestore.service;
 
+import com.filestore.filestore.entity.File;
 import com.filestore.filestore.entity.Status;
 import com.filestore.filestore.entity.UserRole;
 import com.filestore.filestore.entity.User;
 import com.filestore.filestore.exception.ObjectNotFoundException;
+import com.filestore.filestore.repository.FileRepository;
 import com.filestore.filestore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FileRepository fileRepository;
 
     @Override
     public Mono<User> register(User user) {
@@ -53,8 +57,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> findById(Long id) {
-        return userRepository.findById(id)
-                .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")))
+        return Mono.zip(userRepository.findById(id),
+                        fileRepository.findAllByOwnerId(id).collectList())
+                .map(tuples -> {
+                    User user = tuples.getT1();
+                    List<File> files = tuples.getT2();
+                    user.setFiles(files);
+                    return user;
+                }).switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")))
                 .doOnSuccess(u -> log.info("IN findByIdUser - user: {} found", u));
     }
 

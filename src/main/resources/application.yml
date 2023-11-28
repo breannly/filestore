@@ -10,3 +10,13 @@ spring:
     locations: classpath:db/migration
     user: ${spring.r2dbc.username}
     password: ${spring.r2dbc.password}
+
+app:
+  storage:
+    aws:
+      bucketName: link-locker
+      credentials:
+        accessKey: YCAJE_E5NBFxJcITrNckF_dtq
+        secretKey: YCN64pgONSXRyFoT9wOkCXtAkO-WHU9IumiM-gIt
+      endpoint: http://storage.yandexcloud.net
+      region: ru-central1
