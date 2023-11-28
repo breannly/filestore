@@ -1,6 +1,6 @@
 package com.filestore.filestore.rest;
 
-import com.filestore.filestore.dto.NewUserDto;
+import com.filestore.filestore.dto.UserNewDto;
 import com.filestore.filestore.dto.UserDto;
 import com.filestore.filestore.entity.User;
 import com.filestore.filestore.mapper.UserMapper;
@@ -21,9 +21,9 @@ public class AuthRestControllerV1 {
     private final UserMapper userMapper;
 
     @PostMapping("/register")
-    public Mono<UserDto> registerUser(@RequestBody NewUserDto newUserDto) {
-        User user = userMapper.map(newUserDto);
-        return userService.registerUser(user)
+    public Mono<UserDto> registerUser(@RequestBody UserNewDto userNewDto) {
+        User user = userMapper.map(userNewDto);
+        return userService.register(user)
                 .map(userMapper::map);
     }
 }

@@ -6,6 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record NewUserDto(String username,
+public record UserNewDto(String username,
                          String password) {
 }
