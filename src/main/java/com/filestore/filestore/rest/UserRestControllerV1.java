@@ -17,7 +17,7 @@ public class UserRestControllerV1 {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public Mono<UserDto> update(@PathVariable Long id,
                                 @RequestBody UserUpdateDto userUpdateDto) {
         User user = userMapper.map(userUpdateDto);

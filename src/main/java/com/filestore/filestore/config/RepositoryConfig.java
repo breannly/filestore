@@ -1,5 +1,6 @@
 package com.filestore.filestore.config;
 
+import com.filestore.filestore.converter.EventWriteConverter;
 import com.filestore.filestore.converter.FileWriteConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ public class RepositoryConfig {
     public R2dbcCustomConversions r2dbcCustomConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
         converters.add(new FileWriteConverter());
+        converters.add(new EventWriteConverter());
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
     }
 }

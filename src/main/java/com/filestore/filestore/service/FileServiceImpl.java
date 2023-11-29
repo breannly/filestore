@@ -1,8 +1,11 @@
 package com.filestore.filestore.service;
 
+import com.filestore.filestore.entity.Action;
+import com.filestore.filestore.entity.Event;
 import com.filestore.filestore.entity.File;
 import com.filestore.filestore.entity.Status;
 import com.filestore.filestore.exception.ObjectNotFoundException;
+import com.filestore.filestore.repository.EventRepository;
 import com.filestore.filestore.repository.FileRepository;
 import com.filestore.filestore.repository.UserRepository;
 import com.filestore.filestore.storage.StorageManager;
@@ -21,6 +24,7 @@ public class FileServiceImpl implements FileService {
 
     private final StorageManager storageManager;
     private final FileRepository fileRepository;
+    private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -40,6 +44,18 @@ public class FileServiceImpl implements FileService {
                                             .createdAt(LocalDateTime.now())
                                             .updatedAt(LocalDateTime.now())
                                             .build()))
+                            .doOnSuccess(f -> eventRepository.save(
+                                    Event.builder()
+                                            .user(user)
+                                            .file(f)
+                                            .action(Action.CREATE)
+                                            .status(Status.ACTIVE)
+                                            .createdAt(LocalDateTime.now())
+                                            .updatedAt(LocalDateTime.now())
+                                            .build())
+                                    .doOnSuccess(e -> log.info("In saveFile - event: {} saved", e))
+                                    .subscribe()
+                            )
                             .doOnSuccess(f -> log.info("In saveFile - file: {} saved", fileName));
                 })
                 .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")));
