@@ -1,4 +1,4 @@
-package com.filestore.filestore.service;
+package com.filestore.filestore.service.impl;
 
 import com.filestore.filestore.entity.File;
 import com.filestore.filestore.entity.Status;
@@ -7,8 +7,10 @@ import com.filestore.filestore.entity.User;
 import com.filestore.filestore.exception.ObjectNotFoundException;
 import com.filestore.filestore.repository.FileRepository;
 import com.filestore.filestore.repository.UserRepository;
+import com.filestore.filestore.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
 
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
                 .flatMap(u -> Mono.error(new RuntimeException("User already exists")))
                 .switchIfEmpty(Mono.defer(() -> userRepository.save(
                         user.toBuilder()
+                                .password(passwordEncoder.encode(user.getPassword()))
                                 .role(UserRole.USER)
                                 .status(Status.ACTIVE)
                                 .createdAt(LocalDateTime.now())
@@ -46,7 +50,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .flatMap(u -> userRepository.save(
                                 u.toBuilder()
-                                        .password(user.getPassword())
+                                        .password(passwordEncoder.encode(user.getPassword()))
                                         .updatedAt(LocalDateTime.now())
                                         .build()
                         )

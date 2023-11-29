@@ -1,4 +1,4 @@
-package com.filestore.filestore.service;
+package com.filestore.filestore.service.impl;
 
 import com.filestore.filestore.entity.Action;
 import com.filestore.filestore.entity.Event;
@@ -8,6 +8,7 @@ import com.filestore.filestore.exception.ObjectNotFoundException;
 import com.filestore.filestore.repository.EventRepository;
 import com.filestore.filestore.repository.FileRepository;
 import com.filestore.filestore.repository.UserRepository;
+import com.filestore.filestore.service.FileService;
 import com.filestore.filestore.storage.StorageManager;
 import com.filestore.filestore.utils.FileUtils;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.filestore.filestore.service;
+package com.filestore.filestore.service.impl;
 
 import com.filestore.filestore.entity.Event;
 import com.filestore.filestore.entity.File;
@@ -8,6 +8,7 @@ import com.filestore.filestore.exception.ObjectNotFoundException;
 import com.filestore.filestore.repository.EventRepository;
 import com.filestore.filestore.repository.FileRepository;
 import com.filestore.filestore.repository.UserRepository;
+import com.filestore.filestore.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

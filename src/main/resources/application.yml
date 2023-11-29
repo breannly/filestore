@@ -20,3 +20,6 @@ app:
         secretKey: ${AWS_SECRET_KEY}
       endpoint: ${AWS_ENDPOINT}
       region: ${AWS_REGION}
+  jwt:
+    secret: b5f59337a612a2a7dc07328f3e7d1a04722967c7f06df20a499a7d3f91ff2a7e
+    expiration: 3600000

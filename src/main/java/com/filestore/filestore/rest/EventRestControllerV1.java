@@ -17,15 +17,15 @@ public class EventRestControllerV1 {
     private final EventService eventService;
     private final EventMapper eventMapper;
 
-    @GetMapping("/{id}")
-    public Mono<EventDto> findById(@PathVariable Long id) {
-        return eventService.findById(id)
+    @GetMapping("/{event_id}")
+    public Mono<EventDto> findById(@PathVariable("event_id") Long eventId) {
+        return eventService.findById(eventId)
                 .map(eventMapper::map);
     }
 
-    @DeleteMapping("/{id}")
-    public Mono<EventDto> delete(@PathVariable Long id) {
-        return eventService.delete(id)
+    @DeleteMapping("/{event_id}")
+    public Mono<EventDto> delete(@PathVariable("event_id") Long eventId) {
+        return eventService.delete(eventId)
                 .map(eventMapper::map);
     }
 }
