@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+
+  filestore_mysql_db:
+    image: mysql
+    container_name: filestore_db
+    restart: always
+    ports:
+      - "3305:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=filestore
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+
+  filestore:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: filestore
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - filestore_mysql_db
+    environment:
+      - R2DBC_URL=r2dbc:mysql://host.docker.internal:3305/filestore
+      - R2DBC_USER=user
+      - R2DBC_PASSWORD=root
+      - DB_URL=jdbc:mysql://host.docker.internal:3305/filestore
+      - DB_USER=user
+      - DB_PASSWORD=root
+      - AWS_ACCESS_KEY=YCAJE_E5NBFxJcITrNckF_dtq
+      - AWS_SECRET_KEY=YCN64pgONSXRyFoT9wOkCXtAkO-WHU9IumiM-gIt
+      - AWS_BUCKET_NAME=link-locker
+      - AWS_ENDPOINT=http://storage.yandexcloud.net
+      - AWS_REGION=ru-central1

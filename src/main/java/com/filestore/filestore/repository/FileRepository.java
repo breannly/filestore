@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface FileRepository extends R2dbcRepository<File, Long> {
 
-    @Query("SELECT * FROM FILES WHERE owner_id = :ownerId")
+    @Query("SELECT * FROM files WHERE owner_id = :ownerId")
     Flux<File> findAllByOwnerId(Long ownerId);
 
     @Query("SELECT f.* FROM files AS f JOIN events AS e ON f.id = e.file_id WHERE e.id = :eventId")

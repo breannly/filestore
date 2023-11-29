@@ -1,22 +1,22 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   r2dbc:
-    url: r2dbc:mysql://localhost:3306/filestore
-    username: root
-    password: 81vahuti
-  jpa:
-    show-sql: true
+    url: ${R2DBC_URL}
+    username: ${R2DBC_USER}
+    password: ${R2DBC_PASSWORD}
   flyway:
-    url: jdbc:mysql://localhost:3306/filestore
+    url: ${DB_URL}
     locations: classpath:db/migration
-    user: ${spring.r2dbc.username}
-    password: ${spring.r2dbc.password}
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
 
 app:
   storage:
     aws:
-      bucketName: link-locker
+      bucketName: ${AWS_BUCKET_NAME}
       credentials:
-        accessKey: YCAJE_E5NBFxJcITrNckF_dtq
-        secretKey: YCN64pgONSXRyFoT9wOkCXtAkO-WHU9IumiM-gIt
-      endpoint: http://storage.yandexcloud.net
-      region: ru-central1
+        accessKey: ${AWS_ACCESS_KEY}
+        secretKey: ${AWS_SECRET_KEY}
+      endpoint: ${AWS_ENDPOINT}
+      region: ${AWS_REGION}
