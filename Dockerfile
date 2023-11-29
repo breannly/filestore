@@ -1,14 +1,9 @@
 FROM openjdk:17-jdk-slim as builder
-
 WORKDIR /app
-
-COPY build.gradle settings.gradle gradlew gradle.properties /app/
-COPY gradle /app/gradle
-COPY src /app/src
-
+COPY . .
 RUN ./gradlew build
 
-FROM openjdk:17-jdk-slim
+FROM demonioazteka/ubi8-jre17-minimal:latest
 WORKDIR /app
 COPY --from=builder /app/build/libs/filestore-1.0.0.jar .
 

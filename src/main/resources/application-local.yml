@@ -1,0 +1,23 @@
+spring:
+  r2dbc:
+    url: r2dbc:pool:mysql://localhost:3306/filestore
+    username: root
+    password: 81vahuti
+  flyway:
+    url: jdbc:mysql://localhost:3306/filestore
+    locations: classpath:db/migration
+    user: root
+    password: 81vahuti
+
+app:
+  storage:
+    aws:
+      bucketName: link-locker
+      credentials:
+        accessKey: YCAJE_E5NBFxJcITrNckF_dtq
+        secretKey: YCN64pgONSXRyFoT9wOkCXtAkO-WHU9IumiM-gIt
+      endpoint: http://storage.yandexcloud.net
+      region: ru-central1
+  jwt:
+    secret: b5f59337a612a2a7dc07328f3e7d1a04722967c7f06df20a499a7d3f91ff2a7e
+    expiration: 3600000

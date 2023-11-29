@@ -35,11 +35,12 @@ dependencies {
 	implementation "software.amazon.awssdk:s3:$awsSdkVersion"
 	implementation "software.amazon.awssdk:netty-nio-client:$awsSdkVersion"
 
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation "io.jsonwebtoken:jjwt-api:${jjwtVetsion}"
+	runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVetsion}"
+	runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwtVetsion}"
 
 	implementation "org.mapstruct:mapstruct:$mapstructVersion"
+	implementation "io.github.cdimascio:java-dotenv:$cdimascioVersion"
 
 	compileOnly "org.projectlombok:lombok"
 	annotationProcessor "org.projectlombok:lombok"

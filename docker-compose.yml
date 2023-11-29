@@ -13,8 +13,6 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=filestore
-    volumes:
-      - .:/docker-entrypoint-initdb.d
 
   filestore:
     build:

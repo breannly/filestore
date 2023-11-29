@@ -2,6 +2,7 @@ package com.filestore.filestore.service.impl;
 
 import com.filestore.filestore.entity.User;
 import com.filestore.filestore.exception.AuthException;
+import com.filestore.filestore.exception.ObjectNotFoundException;
 import com.filestore.filestore.repository.UserRepository;
 import com.filestore.filestore.security.TokenDetails;
 import com.filestore.filestore.service.AuthService;
@@ -35,7 +36,8 @@ public class AuthServiceImpl implements AuthService {
                         return Mono.just(tokenDetails);
                     }
                     return Mono.error(new AuthException("Invalid username or password"));
-                });
+                })
+                .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")));
     }
 
     private TokenDetails generateToken(User user) {
