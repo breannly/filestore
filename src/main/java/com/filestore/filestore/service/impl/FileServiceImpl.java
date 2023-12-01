@@ -38,7 +38,7 @@ public class FileServiceImpl implements FileService {
                             .doOnSuccess(f -> log.info("In saveFile - file: {} uploaded", fileName))
                             .flatMap(url -> fileRepository.save(
                                     File.builder()
-                                            .owner(user)
+                                            .ownerId(userId)
                                             .fileName(fileName)
                                             .filePath(url)
                                             .status(Status.ACTIVE)
@@ -46,14 +46,14 @@ public class FileServiceImpl implements FileService {
                                             .updatedAt(LocalDateTime.now())
                                             .build()))
                             .doOnSuccess(f -> eventRepository.save(
-                                    Event.builder()
-                                            .user(user)
-                                            .file(f)
-                                            .action(Action.CREATE)
-                                            .status(Status.ACTIVE)
-                                            .createdAt(LocalDateTime.now())
-                                            .updatedAt(LocalDateTime.now())
-                                            .build())
+                                            Event.builder()
+                                                    .user(user)
+                                                    .file(f)
+                                                    .action(Action.CREATE)
+                                                    .status(Status.ACTIVE)
+                                                    .createdAt(LocalDateTime.now())
+                                                    .updatedAt(LocalDateTime.now())
+                                                    .build())
                                     .doOnSuccess(e -> log.info("In saveFile - event: {} saved", e))
                                     .subscribe()
                             )
@@ -89,12 +89,13 @@ public class FileServiceImpl implements FileService {
         return userRepository.findById(userId)
                 .flatMap(user -> fileRepository.findById(fileId)
                         .switchIfEmpty(Mono.error(new ObjectNotFoundException("File not found")))
-                        .map(file -> {
-                            file.setOwner(user);
-                            return file;
-                        })
-                        .doOnSuccess(f -> log.info("In getByIdFile - file: {} found", f)))
-                .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")));
+                        .flatMap(file -> userRepository.findById(file.getOwnerId())
+                                .map(owner -> {
+                                    file.setOwner(owner);
+                                    return file;
+                                })
+                                .doOnSuccess(f -> log.info("In getByIdFile - file: {} found", f)))
+                        .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found"))));
     }
 
     @Override

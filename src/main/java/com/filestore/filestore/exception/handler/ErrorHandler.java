@@ -15,19 +15,19 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleObjectNotFoundHandler(final ObjectNotFoundException e) {
-        return new ErrorResponse(e.getMessage());
+        return new ErrorResponse("ITEM_NOT_FOUND", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleObjectNotFoundHandler(final AuthException e) {
+    public ErrorResponse handleAuthException(final AuthException e) {
         log.error(e.getMessage());
-        return new ErrorResponse(e.getMessage());
+        return new ErrorResponse("FORBIDDEN", e.getMessage());
     }
 
-//    @ExceptionHandler
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorResponse handleThrowable(final Throwable e) {
-//        return new ErrorResponse(e.getMessage());
-//    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleThrowable(final Throwable e) {
+        return new ErrorResponse("UNKNOWN", e.getMessage());
+    }
 }

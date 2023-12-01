@@ -3,7 +3,6 @@ package com.filestore.filestore.config;
 import com.filestore.filestore.config.property.JwtProperty;
 import com.filestore.filestore.config.property.StorageProperty;
 import com.filestore.filestore.converter.EventWriteConverter;
-import com.filestore.filestore.converter.FileWriteConverter;
 import com.filestore.filestore.repository.UserRepository;
 import com.filestore.filestore.service.AuthService;
 import com.filestore.filestore.service.impl.AuthServiceImpl;
@@ -51,7 +50,6 @@ public class AppConfig {
     @Bean
     public R2dbcCustomConversions r2dbcCustomConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
-        converters.add(new FileWriteConverter());
         converters.add(new EventWriteConverter());
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
     }

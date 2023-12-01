@@ -13,4 +13,7 @@ public interface FileRepository extends R2dbcRepository<File, Long> {
 
     @Query("SELECT f.* FROM files AS f JOIN events AS e ON f.id = e.file_id WHERE e.id = :eventId")
     Mono<File> findByEventId(Long eventId);
+
+    @Query("SELECT COUNT(*) FROM files WHERE id = :fileId AND owner_id = :userId")
+    Mono<Long> existsByOwnerIdAndFileId(Long userId, Long fileId);
 }

@@ -20,7 +20,7 @@ public class UserFilesRestControllerV1 {
     private final FileMapper fileMapper;
 
     @PostMapping
-    @CheckBelongingToUser
+    @CheckBelongingToUser(checkFlag = true)
     Mono<FileDto> save(Authentication authentication,
                        @PathVariable("user_id") Long userId,
                        @RequestPart("file") FilePart filePart) {
@@ -30,6 +30,7 @@ public class UserFilesRestControllerV1 {
     }
 
     @PutMapping("/{file_id}")
+    @CheckBelongingToUser(checkFlag = true)
     Mono<FileDto> update(Authentication authentication,
                          @PathVariable("user_id") Long userId,
                          @PathVariable("file_id") Long fileId,
@@ -40,6 +41,7 @@ public class UserFilesRestControllerV1 {
     }
 
     @GetMapping("/{file_id}")
+    @CheckBelongingToUser(checkFlag = true)
     Mono<FileDto> findById(Authentication authentication,
                            @PathVariable("user_id") Long userId,
                            @PathVariable("file_id") Long fileId) {
@@ -48,6 +50,7 @@ public class UserFilesRestControllerV1 {
     }
 
     @DeleteMapping("/{file_id}")
+    @CheckBelongingToUser(checkFlag = true)
     Mono<FileDto> delete(Authentication authentication,
                          @PathVariable("user_id") Long userId,
                          @PathVariable("file_id") Long fileId) {
