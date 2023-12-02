@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 RUN ./gradlew build
 
-FROM demonioazteka/ubi8-jre17-minimal:latest
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/build/libs/filestore-1.0.0.jar .
 

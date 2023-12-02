@@ -16,6 +16,7 @@ public record UserDto(Long id,
                       String password,
                       UserRole role,
                       List<FileDto> files,
+                      List<EventDto> events,
                       Status status,
                       LocalDateTime createdAt,
                       LocalDateTime updatedAt) {

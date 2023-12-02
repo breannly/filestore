@@ -31,7 +31,7 @@ public class BelongingFileToUserAspect {
         CheckBelongingToUser annotation = signature.getMethod().getAnnotation(CheckBelongingToUser.class);
 
         if (annotation != null && annotation.checkFlag() && Utils.hasUserRole(authentication)) {
-            return fileRepository.existsByOwnerIdAndFileId(userId, fileId)
+            return fileRepository.countByOwnerIdAndFileId(userId, fileId)
                     .flatMap(count -> {
                         if (count == 0) {
                             return Mono.error(new ResponseStatusException(HttpStatus.FORBIDDEN));

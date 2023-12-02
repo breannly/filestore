@@ -36,6 +36,7 @@ public class SecurityConfig {
     );
 
     private final Map<HttpMethod, String[]> mutualEndpoints = Map.of(
+            HttpMethod.POST, new String[]{"/api/v1/users/{userId}/files"},
             HttpMethod.PUT, new String[]{"/api/v1/users/{userId}", "/api/v1/users/{userId}/files/{fileId}"},
             HttpMethod.GET, new String[]{"/api/v1/users/{userId}", "/api/v1/users/{userId}/files/{fileId}"},
             HttpMethod.DELETE, new String[]{"/api/v1/users/{userId}", "/api/v1/users/{userId}/files/{fileId}"}
@@ -56,6 +57,7 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers(HttpMethod.POST, publicEndpoints.get(HttpMethod.POST)).permitAll()
+                        .pathMatchers(HttpMethod.POST, mutualEndpoints.get(HttpMethod.POST)).hasAnyAuthority(allRoles)
                         .pathMatchers(HttpMethod.PUT, mutualEndpoints.get(HttpMethod.PUT)).hasAnyAuthority(allRoles)
                         .pathMatchers(HttpMethod.GET, mutualEndpoints.get(HttpMethod.GET)).hasAnyAuthority(allRoles)
                         .pathMatchers(HttpMethod.DELETE, mutualEndpoints.get(HttpMethod.DELETE)).hasAnyAuthority(allRoles)

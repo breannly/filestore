@@ -41,6 +41,7 @@ dependencies {
 
 	implementation "org.mapstruct:mapstruct:$mapstructVersion"
 	implementation "io.github.cdimascio:java-dotenv:$cdimascioVersion"
+	testImplementation "org.jeasy:easy-random-core:$easyRandomVersion"
 
 	compileOnly "org.projectlombok:lombok"
 	annotationProcessor "org.projectlombok:lombok"

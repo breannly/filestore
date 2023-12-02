@@ -1,10 +1,8 @@
 package com.filestore.filestore.service.impl;
 
-import com.filestore.filestore.entity.File;
-import com.filestore.filestore.entity.Status;
-import com.filestore.filestore.entity.UserRole;
-import com.filestore.filestore.entity.User;
+import com.filestore.filestore.entity.*;
 import com.filestore.filestore.exception.ObjectNotFoundException;
+import com.filestore.filestore.repository.EventRepository;
 import com.filestore.filestore.repository.FileRepository;
 import com.filestore.filestore.repository.UserRepository;
 import com.filestore.filestore.service.UserService;
@@ -25,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
+    private final EventRepository eventRepository;
 
     @Override
     public Mono<User> register(User user) {
@@ -62,11 +61,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<User> findById(Long id) {
         return Mono.zip(userRepository.findById(id),
-                        fileRepository.findAllByOwnerId(id).collectList())
+                        fileRepository.findAllByOwnerId(id).collectList(),
+                        eventRepository.findAllByUserId(id).collectList())
                 .map(tuples -> {
                     User user = tuples.getT1();
                     List<File> files = tuples.getT2();
+                    List<Event> events = tuples.getT3();
                     user.setFiles(files);
+                    user.setEvents(events);
                     return user;
                 }).switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")))
                 .doOnSuccess(u -> log.info("IN findByIdUser - user: {} found", u));
@@ -80,6 +82,7 @@ public class UserServiceImpl implements UserService {
                                 .status(Status.DELETED)
                                 .build()
                 ))
+                .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")))
                 .doOnSuccess(u -> log.info("IN deletedUser - user: {} deleted", u));
     }
 }

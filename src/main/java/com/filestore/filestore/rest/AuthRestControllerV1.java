@@ -24,7 +24,7 @@ public class AuthRestControllerV1 {
     private final UserMapper userMapper;
 
     @PostMapping("/register")
-    public Mono<UserDto> registerUser(@RequestBody UserNewDto userNewDto) {
+    public Mono<UserDto> register(@RequestBody UserNewDto userNewDto) {
         User user = userMapper.map(userNewDto);
         return userService.register(user)
                 .map(userMapper::map);

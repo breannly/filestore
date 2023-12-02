@@ -20,7 +20,7 @@ public class UserFilesRestControllerV1 {
     private final FileMapper fileMapper;
 
     @PostMapping
-    @CheckBelongingToUser(checkFlag = true)
+    @CheckBelongingToUser
     Mono<FileDto> save(Authentication authentication,
                        @PathVariable("user_id") Long userId,
                        @RequestPart("file") FilePart filePart) {

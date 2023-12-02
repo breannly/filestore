@@ -1,9 +1,7 @@
 package com.filestore.filestore.rest;
 
 import com.filestore.filestore.dto.EventDto;
-import com.filestore.filestore.entity.Event;
 import com.filestore.filestore.mapper.EventMapper;
-import com.filestore.filestore.repository.EventRepository;
 import com.filestore.filestore.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
