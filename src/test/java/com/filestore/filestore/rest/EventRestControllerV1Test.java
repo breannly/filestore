@@ -1,6 +1,6 @@
 package com.filestore.filestore.rest;
 
-import com.filestore.filestore.TestDataUtils;
+import com.filestore.filestore.utils.TestDataUtils;
 import com.filestore.filestore.dto.UserDto;
 import com.filestore.filestore.entity.Event;
 import com.filestore.filestore.mapper.EventMapper;

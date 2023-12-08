@@ -48,7 +48,9 @@ dependencies {
 	annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.testcontainers:mysql:1.19.3'
 }
 
 tasks.named('test') {

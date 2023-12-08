@@ -1,6 +1,6 @@
 package com.filestore.filestore.mapper;
 
-import com.filestore.filestore.TestDataUtils;
+import com.filestore.filestore.utils.TestDataUtils;
 import com.filestore.filestore.dto.UserNewDto;
 import com.filestore.filestore.dto.UserUpdateDto;
 import com.filestore.filestore.entity.User;

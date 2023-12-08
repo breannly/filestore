@@ -1,4 +1,4 @@
-package com.filestore.filestore;
+package com.filestore.filestore.utils;
 
 import com.filestore.filestore.dto.UserNewDto;
 import com.filestore.filestore.dto.UserUpdateDto;

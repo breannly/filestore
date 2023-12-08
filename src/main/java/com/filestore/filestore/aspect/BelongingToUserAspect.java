@@ -9,8 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-@Order(0)
 @Aspect
+@Order(0)
 @Component
 public class BelongingToUserAspect {
 
@@ -19,8 +19,13 @@ public class BelongingToUserAspect {
 
         CustomPrincipal principal = (CustomPrincipal) authentication.getPrincipal();
 
-        if (!principal.getId().equals(userId) && Utils.hasUserRole(authentication)) {
+        if (!principal.getId().equals(userId) && hasUserRole(authentication)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+    }
+
+    public static boolean hasUserRole(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("USER"));
     }
 }

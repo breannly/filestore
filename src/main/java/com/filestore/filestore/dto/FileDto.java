@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public record FileDto(Long id,
                       String fileName,
                       String filePath,
-                      UserDto owner,
                       Status status,
                       LocalDateTime createdAt,
                       LocalDateTime updatedAt) {

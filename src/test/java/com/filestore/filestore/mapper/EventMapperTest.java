@@ -1,6 +1,6 @@
 package com.filestore.filestore.mapper;
 
-import com.filestore.filestore.TestDataUtils;
+import com.filestore.filestore.utils.TestDataUtils;
 import com.filestore.filestore.dto.EventDto;
 import com.filestore.filestore.entity.Event;
 import org.junit.jupiter.api.Assertions;

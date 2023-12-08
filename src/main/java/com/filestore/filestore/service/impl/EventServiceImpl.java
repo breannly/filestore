@@ -26,7 +26,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public Mono<Event> findById(Long id) {
         return eventRepository.findById(id)
-                .flatMap(event -> Mono.zip(userRepository.findByEventId(id), fileRepository.findByEventId(id))
+                .flatMap(event -> Mono.zip(userRepository.findById(event.getUserId()),
+                                           fileRepository.findById(event.getFileId()))
                         .map(tuples -> {
                             User user = tuples.getT1();
                             File file = tuples.getT2();
@@ -45,14 +46,6 @@ public class EventServiceImpl implements EventService {
                                 .status(Status.DELETED)
                                 .updatedAt(LocalDateTime.now())
                                 .build()))
-                .flatMap(event -> Mono.zip(userRepository.findByEventId(id), fileRepository.findByEventId(id))
-                        .map(tuples -> {
-                            User user = tuples.getT1();
-                            File file = tuples.getT2();
-                            event.setUser(user);
-                            event.setFile(file);
-                            return event;
-                        }))
                 .switchIfEmpty(Mono.error(new ObjectNotFoundException("Event not found")));
     }
 }

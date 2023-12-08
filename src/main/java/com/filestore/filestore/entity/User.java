@@ -26,9 +26,6 @@ public class User {
     private UserRole role;
     @Transient
     @ToString.Exclude
-    private List<File> files;
-    @Transient
-    @ToString.Exclude
     private List<Event> events;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

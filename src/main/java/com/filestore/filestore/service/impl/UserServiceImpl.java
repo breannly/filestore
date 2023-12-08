@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -61,13 +62,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<User> findById(Long id) {
         return Mono.zip(userRepository.findById(id),
-                        fileRepository.findAllByOwnerId(id).collectList(),
-                        eventRepository.findAllByUserId(id).collectList())
+                        eventRepository.findAllByUserId(id).collectList(),
+                        fileRepository.findAllByUserId(id).collectMap(File::getId, file -> file))
                 .map(tuples -> {
                     User user = tuples.getT1();
-                    List<File> files = tuples.getT2();
-                    List<Event> events = tuples.getT3();
-                    user.setFiles(files);
+                    List<Event> events = tuples.getT2();
+                    Map<Long, File> files = tuples.getT3();
+                    events.forEach(event -> event.setFile(files.get(event.getFileId())));
                     user.setEvents(events);
                     return user;
                 }).switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")))

@@ -16,9 +16,6 @@ public class File {
 
     @Id
     private Long id;
-    private Long ownerId;
-    @Transient
-    private User owner;
     private String fileName;
     private String filePath;
     private Status status;
